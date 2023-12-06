@@ -2,10 +2,6 @@ import numpy as np
 from collections import Counter
 
 
-def euclidean_distance(x1, x2):
-    distance = np.sqrt(np.sum((x1 - x2) ** 2))
-    return distance
-
 class KNN:
     def __init__(self, k=3):
         self.k = k
@@ -24,3 +20,8 @@ class KNN:
         k_nearest_labels = [self.y_train[i] for i in k_indices]
         most_common = Counter(k_nearest_labels).most_common()
         return most_common[0][0]
+
+
+def euclidean_distance(x1, x2):
+    distance = np.sqrt(np.sum((x1 - x2) ** 2))
+    return distance
