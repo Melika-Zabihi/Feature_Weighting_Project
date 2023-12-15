@@ -2,7 +2,9 @@
 ## Description
 
 This project is a classification task using K-Nearest Neighbors algorithm (KNN). The goal is to evaluate the performance of KNN algorithm with different feature weighting techniques. Four datasets have been used for this project: iris, digits, wine, and breast_cancer. Three feature weighting methods have been implemented for this project: random weighting, mutual information-based weighting, and label correlation-based weighting. 
-   
+
+<br>
+
 ## Datasets
 
 Four datasets have been used for this project:
@@ -11,6 +13,7 @@ Four datasets have been used for this project:
 2. Digits: A dataset containing 1797 images of handwritten digits (0-9) represented as 8x8 matrices (64 features).
 3. Wine: A dataset containing 178 samples of wine with their chemical composition (13 features).
 4. Breast Cancer: A dataset containing 569 samples of breast cancer with their 30 features.
+<br>
 
 ## Feature Weighting Methods
 
