@@ -1,7 +1,7 @@
 import numpy as np
-from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from knn import KNN
+from sklearn import datasets
 from sklearn.feature_selection import mutual_info_classif
 from matplotlib.colors import ListedColormap
 import matplotlib.pyplot as plt
@@ -17,7 +17,7 @@ def main():
     # dataset = datasets.load_breast_cancer()
 
     X, y = dataset.data, dataset.target
-    X = apply_weights(X, y, Weight.ff_correlation)
+    X = apply_weights(X, y, Weight.random)
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
 
@@ -35,30 +35,30 @@ def calculate_accuracy(predictions, y_test):
 def apply_weights(X, y, weight_type):
 
     if weight_type == Weight.normal:
-        X = normalize(X)
-        return X
+        feature_weights = 1
+        return X * feature_weights
 
     if weight_type == Weight.random:
-        random_matrix = np.random.rand(*X.shape)
+        random_matrix = np.random.rand(X.shape[1])
+        random_matrix = normalize(random_matrix)
         weighted_x = np.round(X * random_matrix, 2)
-        normalized_x = normalize(weighted_x)
-        return normalized_x
+        return weighted_x
 
     if weight_type == Weight.fl_correlation:
         mi = mutual_info_classif(X, y)
-        weighted_x = X * mi
-        normalized_x = normalize(weighted_x)
-        return normalized_x
+        normalized_weights = normalize(mi)
+        weighted_x = X * normalized_weights
+        return weighted_x
 
     if weight_type == Weight.ff_correlation:
         df = pd.DataFrame(data=X)
         correlation_matrix = df.corr().abs()
         avg_corr = (correlation_matrix.sum() - 1) / (len(correlation_matrix.columns) - 1)
         reciprocal_avg_corr = 1 / avg_corr
-        result = df * reciprocal_avg_corr
+        normalized_result = normalize(reciprocal_avg_corr)
+        result = df * normalized_result
         final_result = result.to_numpy()
-        normalized_result = normalize(final_result)
-        return normalized_result
+        return final_result
 
 
 def plot_data(X, data):
